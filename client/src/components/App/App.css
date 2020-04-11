@@ -1,79 +1,80 @@
 /* border radius */
 .container_br {
   border-style: none;
-  border-radius: 8px;  
+  border-radius: 8px;
 }
-html, body{
+html,
+body {
   height: 100vh;
 }
-#root, #test{
+#root,
+#test {
   height: 100%;
 }
 /* theme colors */
 .bluegreen_bg {
-  background-color: #2F7C8F;
+  background-color: #2f7c8f;
 }
 
 .greenblue_bg {
-  background-color: #08A68E;
+  background-color: #08a68e;
 }
 
 .green_bg {
-  background-color: #4FB06F;
+  background-color: #4fb06f;
 }
 
 .yellow_bg {
-  background-color:#F2CB1D;  
+  background-color: #f2cb1d;
 }
 
 .orange_bg {
-  background-color: #E68D20;  
+  background-color: #e68d20;
 }
 
 .red_bg {
-  background-color: #DB6C4B;  
+  background-color: #db6c4b;
 }
 
 /* media queries for mobile first  */
 /* device width is greater than or equal to xpx */
 
-
 @media (min-width: 360px) {
   .container {
-    width: 95%;    
+    width: 95%;
   }
 }
 
-@media (min-width: 360px) and (max-width:575) {
+@media (min-width: 360px) and (max-width: 575) {
   .container {
-    width: 95%;   
+    width: 95%;
   }
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .container {
-    width: 95%;   
+    width: 95%;
   }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .container {
-    width: 60%;    
+    width: 60%;
   }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .container {
-    width: 60%;    
+    width: 60%;
   }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .container {
-    width: 60%;    
+    width: 60%;
   }
 }
