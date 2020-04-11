@@ -12,6 +12,7 @@ import Register from "../../pages/Register/Register";
 import Secret from "../../pages/Secret/Secret";
 import NotFound from "../../pages/NotFound/NotFound";
 import UserPage from "../../pages/User";
+import Friends from "../../pages/Friends";
 import "./App.css";
 import theBackground from "./images/trees.jpg";
 import muirWoods from "./images/muirwoods.jpg";
@@ -63,20 +64,7 @@ class App extends Component {
   componentDidMount() {
     const { authToken } = this.state.auth;
     if (!authToken) return;
-
-    API.Users.getMe(authToken)
-      .then((response) => response.data)
-      .then((user) =>
-        this.setState((prevState) => ({
-          auth: {
-            ...prevState.auth,
-            user,
-          },
-        }))
-      )
-      .catch((err) => console.log(err));
   }
-  someFunc = () => {};
   render() {
     const bStyle = {
       backgroundImage: `url(${this.state.backgroundImage})`,
@@ -105,6 +93,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <PrivateRoute path="/secret" component={Secret} />
               <PrivateRoute path="/userpage" component={UserPage} />
+              <PrivateRoute path="/friends" component={Friends} />
               <Route component={NotFound} />
             </Switch>
           </div>
