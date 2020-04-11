@@ -28,14 +28,12 @@ const SelectedChallenges = (props) => {
                     <span style={{ cursor: "pointer" }} onClick={()=>handleComplete(position)}>X</span>points: {action.points} - {action.name} -{" "}
                     {action.description}
                   </p>
-                  
                 ))}
                 {props.selections.length > 0 ? (
                   <Button variant="success" onClick={props.clickHandler}>
                     Saved
                   </Button>
                 ) : null}
-                
               </Tab>
               <br></br>
               {/* <Tab eventKey="Update" title="Update">
