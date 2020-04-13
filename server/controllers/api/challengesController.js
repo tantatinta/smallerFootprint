@@ -101,9 +101,8 @@ challengesController.get("/challengeaction/:id", (req, res) => {
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
-  })
-  .catch((err) => console.log(err));
-})
+});
+
 
 // get current challenge score of any user, when given their UserId
 // 
