@@ -26,12 +26,9 @@ const SelectedChallenges = (props) => {
                     <span
                       style={{ cursor: "pointer" }}
                       onClick={() => handleComplete(position)}
-                    >
-                      {" "}
-                      <TiDeleteOutline size={28} />{" "}
-                    </span>
+                    ></span>
                     points: {action.points} - {action.name} -{" "}
-                    {action.description}
+                    {action.description} <TiDeleteOutline size={28} />{" "}
                   </p>
                 ))}
                 {props.selections.length > 0 ? (
@@ -40,7 +37,7 @@ const SelectedChallenges = (props) => {
                     variant="light"
                     onClick={props.clickHandler}
                   >
-                    {<FiSave size={28} />} Save this Challenge
+                    {<FiSave size={28} />} Save these Actions
                   </Button>
                 ) : null}
               </Tab>

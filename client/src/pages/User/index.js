@@ -71,7 +71,9 @@ const User = (props) => {
                 act.name,
                 <ButtonGroup>
                   <DropdownButton variant="clear" title={<FiInfo size={28} />}>
-                    <Dropdown.Item eventKey="">{act.description}</Dropdown.Item>
+                    <Dropdown.Item className="wordWrap" eventKey="">
+                      {act.description}
+                    </Dropdown.Item>
                   </DropdownButton>
                 </ButtonGroup>,
                 act.id
@@ -83,7 +85,9 @@ const User = (props) => {
           points: {act.points} - {act.name} -{" "}
           <ButtonGroup>
             <DropdownButton variant="clear" title={<FiInfo size={28} />}>
-              <Dropdown.Item eventKey="">{act.description}</Dropdown.Item>
+              <Dropdown.Item className="wordWrap" eventKey="">
+                {act.description}
+              </Dropdown.Item>
             </DropdownButton>
           </ButtonGroup>
         </Card.Body>
