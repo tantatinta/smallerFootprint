@@ -80,68 +80,40 @@ challengesController.post("/", JWTVerifier, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-challengesController.get("/", JWTVerifier, (req, res) => {
-  db.Challenge.findAll({
-    limit: 1,
-    order: [["createdAt", "DESC"]],
-    where: req.user.id,
-  })
-    .then((challenges) => {
-      if (!challenges.length) {
-        return res
-          .status(404)
-          .send(`Challenge with id ${req.params.id} not found.`);
-      }
-      // .getActions is not a function
-      // console.log(challenges[0].getActions());
-      let actions = challenges[0]
-        .getActions()
-        // console.log(actions);
-        // Promise.all(actions)
-        .then((data) => {
-          const sentData = {
-            id: challenges[0].id,
-            actions: data,
-          };
-          console.log(sentData);
-          res.json(sentData);
-        });
-    })
-    .catch((err) => console.log(err));
-});
-
 // update through table "accomplished"
 // actually updates challengeaction
 // Working
-// challengesController.put("/challengeaction", JWTVerifier, (req, res)=>{
-//   const { ChallengeId, ActionId } = req.body
+challengesController.put("/challengeaction", JWTVerifier, (req, res) => {
+  const { ChallengeId, ActionId } = req.body;
 
-//   db.ChallengeAction.findAll({
-//     where: {
-//       ChallengeId: ChallengeId,
-//       ActionId: ActionId,
-//     },
-//   })
-//     .then((data) => {
-//       if (!data.length) {
-//         return res
-//           .status(404)
-//           .send(`ChallengeAction with ChallengeId ${ChallengeId} and ActionId ${ActionId} not found.`);
-//       }
+  db.ChallengeAction.findAll({
+    where: {
+      ChallengeId: ChallengeId,
+      ActionId: ActionId,
+    },
+  })
+    .then((data) => {
+      if (!data.length) {
+        return res
+          .status(404)
+          .send(
+            `ChallengeAction with ChallengeId ${ChallengeId} and ActionId ${ActionId} not found.`
+          );
+      }
 
-//       if(data[0].dataValues.accomplished === false){
-//         return data[0].updateAttributes({
-//           accomplished: 1
-//         })
-//       }else {
-//         return data[0].updateAttributes({
-//           accomplished: 0
-//         })
-//       }
-//     })
-//     .then((val) => res.json(val))
-//     .catch((err) => console.log(err));
-// })
+      if (data[0].dataValues.accomplished === false) {
+        return data[0].updateAttributes({
+          accomplished: 1,
+        });
+      } else {
+        return data[0].updateAttributes({
+          accomplished: 0,
+        });
+      }
+    })
+    .then((val) => res.json(val))
+    .catch((err) => console.log(err));
+});
 
 // Add actions to a challenge
 // Add JWTVerifier back in later
