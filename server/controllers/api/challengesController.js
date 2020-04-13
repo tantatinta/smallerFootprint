@@ -4,7 +4,7 @@ const db = require("../../models");
 const { JWTVerifier } = require("../../lib/passport");
 
 // searches for last five challenges
-challengesController.get("/:UserId", JWTVerifier, (req, res) => {
+challengesController.get("/UserId", JWTVerifier, (req, res) => {
   db.Challenge.findAll({
     limit: 5,
     order: [["createdAt", "DESC"]],
@@ -15,7 +15,36 @@ challengesController.get("/:UserId", JWTVerifier, (req, res) => {
     .catch((err) => console.log(err));
 });
 
+<<<<<<< HEAD
 // get current challenge
+=======
+// searches for the last five challenges and returns an array of objects (one for each challenge) and each object has the points by catagory
+// NOT WORKING
+challengesController.get("/multipast", JWTVerifier, (req, res) => {
+  db.Challenge.findAll({
+    limit: 5,
+    order: [['createdAt', 'DESC']],
+    where: {
+      UserId: req.user.id
+    }
+  })
+    .then(challenges => {
+      if (!challenges.length) {
+        return res
+          .status(404)
+          .send(`Challenge with id ${req.params.id} not found.`);
+      }
+
+      return Promise.all(challenges.map(val=>{
+        return val.getActions();
+      }))
+    })
+    .then(data=> res.json(data))
+    .catch((err) => console.log(err));
+});
+
+// get current challenge 
+>>>>>>> efc1b327d2073dea22e819b1f7e7306307184321
 // working
 challengesController.get("/", JWTVerifier, (req, res) => {
   db.Challenge.findAll({
@@ -30,6 +59,7 @@ challengesController.get("/", JWTVerifier, (req, res) => {
           .send(`Challenge with id ${req.params.id} not found.`);
       }
       // .getActions is not a function
+      // console.log(challenges[0].getActions());
       return challenges[0].getActions();
     })
     .then((actions) => res.json(actions))
@@ -37,6 +67,7 @@ challengesController.get("/", JWTVerifier, (req, res) => {
 });
 
 // get current score of challenge based on actions accomplished
+// must pass in ChallengeId
 challengesController.get("/challengeaction/:id", (req, res) => {
   db.ChallengeAction.findAll({
     where: {
@@ -70,7 +101,57 @@ challengesController.get("/challengeaction/:id", (req, res) => {
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
+  })
+  .catch((err) => console.log(err));
+})
+
+// get current challenge score of any user, when given their UserId
+// 
+challengesController.get("/other/:userId", (req, res) => {
+  db.Challenge.findAll({
+    where: {
+      UserId: req.params.userId 
+    },
+    order: [['createdAt', 'DESC']],
+    limit: 1
+  })
+  .then((val) => {
+    db.ChallengeAction.findAll({
+      where: {
+        ChallengeId: val[0].id,
+        accomplished: 1
+      }
+    })
+    .then((data) => {
+      return (data.map(val => {
+        return val.dataValues.ActionId
+      }));
+    })
+    .then((actionIdArray) => {
+      db.Action.findAll({
+        where: {
+          id: actionIdArray
+        }
+      })
+      .then((actions) => {
+        if (!actions) {
+          return res
+            .status(404)
+            .send(`action could not found.`);
+        }
+  
+        let scoredPoints = actions.reduce((total, action) => total + action.points, 0)
+  
+        res.json(scoredPoints);
+      })
+      .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+  })
+    .catch((err) => console.log(err));
 });
+
+
 
 // post challenge
 // working
