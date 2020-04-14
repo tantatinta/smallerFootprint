@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import AuthContext from "../../contexts/AuthContext";
 import API from "../../lib/API";
+import "./style.css"
 
 //make a useEffect function with API call that sets friends as the result of the api call 
 // maps api result to render
